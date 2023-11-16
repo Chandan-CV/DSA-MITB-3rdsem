@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "CalculatorImpl",
+      "request": "launch",
+      "mainClass": "CalculatorImpl",
+      "projectName": "DSA-MITB-3rdsem_2a66d007"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",

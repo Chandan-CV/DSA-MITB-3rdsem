@@ -1,75 +1,68 @@
-// doubly linked list
-
 #include<stdio.h>
 #include<stdlib.h>
-void main(){
 
 struct node{
-int data;
-struct node *next;
-struct node *previous;
-}*head, *CurrentElement, *TempElement;
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+typedef struct node node;
 
-// creation
+node* createNode(int data){
+    node* temp = (node*) malloc(sizeof(node));
+    temp->data = data;
+    temp->next = NULL;
+    temp->prev = NULL;
+    return temp;
+}
 
-head = (struct node*)malloc(sizeof(struct node*));
-head->data = 0;
-head->next = NULL;
-head->previous= NULL;
-
-// insertion
-int isFirst = 1;
-
-void addElement(int element){
-    if(isFirst){
-        printf("adding the first element\n");
-        head->data = element;
-        CurrentElement = head;
-        isFirst =0;
+void insertNode(node** head, int data){
+    node* t2 = createNode(data);
+    if(*head == NULL){
+        *head = (node*)malloc(sizeof(node));
+        *head =t2;
         return;
     }
-    printf("adding element \n");
-    TempElement = (struct node*)malloc(sizeof(struct node*));
-    TempElement->data = element;
-    TempElement->previous = CurrentElement;
-    CurrentElement->next = TempElement;
-    TempElement->next = NULL;
-    CurrentElement = TempElement;
-    return;
-}
-
-void traversing(){
-printf("\n Traversing and displaying the linkedlist :) \n");
-TempElement = head;
-while(TempElement!= NULL){
-        printf("The element is: %d\n", TempElement->data);
-        TempElement = TempElement->next;
-}
-}
-
-void deletion(int element){
-printf("finding the element in the list\n");
-TempElement = head;
-int isFound =0;
-while(TempElement != NULL){
-    if(TempElement->data == element){
-        printf("Element found!\n");
-        isFound =1;
-        printf("Deleting it now! \n");
-        TempElement->previous->next = TempElement->next;
-        break;
+    node* temp = *head;
+    while(temp->next!=NULL){
+        temp= temp->next;
     }
-    TempElement = TempElement->next;
-}
-if(!isFound){
-    printf("Element not found :(\n");
-}
+    temp->next = t2;
+    t2->prev = temp;
 }
 
-addElement(10);
-addElement(20);
-addElement(500);
-traversing();
-deletion(20);
-traversing();
+void display(node* head){
+    node* temp = head;
+    while(temp!=NULL){
+        printf("%d \n",temp->data);
+        temp=  temp->next;
+    }
+}
+
+void deleteElement(node** head,int element){
+    node* temp = *head; 
+    if(temp->data == element){
+        *head = temp->next;
+        (*head)->prev = NULL;
+        return;
+    }
+    while(temp->next->data!=element){
+        temp = temp->next;
+    }
+    temp->next = temp->next->next;
+    
+    if(temp->next != NULL)
+    temp->next->prev = temp;
+}
+
+void main(){
+    node *head = NULL;
+    insertNode(&head,10);
+    insertNode(&head,20);
+    insertNode(&head,30);
+    display(head);
+    deleteElement(&head, 20);
+    printf("\n\n\n");
+    display(head);
+
 }
