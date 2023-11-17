@@ -15,6 +15,14 @@ void main(){
 node* head =  NULL;
 insert(&head, 10);
 insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
+insert(&head, 50);
 insert(&head, 10);
 insert(&head, 30);
 insert(&head, 10);
@@ -43,7 +51,8 @@ void removeRepeated(node **head){
             if(i->data == j->next->data){
                 j->next = j->next->next;
             }
-            j = j->next;
+            else{
+            j = j->next;}
         }
         i = i->next;
     }
